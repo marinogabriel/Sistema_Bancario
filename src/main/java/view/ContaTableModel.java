@@ -9,10 +9,10 @@ import java.util.logging.Logger;
 import model.Conta;
 
 
-public class ContasTableModel extends GenericTableModel {
+public class ContaTableModel extends GenericTableModel {
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
-    public ContasTableModel(List vDados) {
+    public ContaTableModel(List vDados) {
         super(vDados, new String[]{"Conta", "Tipo", "Saldo"});
     }
     

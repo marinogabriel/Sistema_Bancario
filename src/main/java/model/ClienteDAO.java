@@ -32,7 +32,7 @@ public class ClienteDAO extends DAO {
             stmt = DAO.getConnection().prepareStatement("INSERT INTO cliente (nome, cpf, dataNasc) VALUES (?,?,?)");
             stmt.setString(1, nome);
             stmt.setString(2, cpf);
-            stmt.setDate(1, new java.sql.Date(dataNasc.getTimeInMillis()));
+            stmt.setDate(3, new java.sql.Date(dataNasc.getTimeInMillis()));
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(ClienteDAO.class.getName()).log(Level.SEVERE, null, ex);

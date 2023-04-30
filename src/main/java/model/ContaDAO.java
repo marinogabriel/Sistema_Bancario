@@ -92,8 +92,8 @@ public class ContaDAO extends DAO {
     }
     
     // RetrieveByIdConta
-    public List retrieveByIdConta(int idConta) {
-        return this.retrieve("SELECT * FROM conta WHERE id_conta = " + idConta);
+    public List retrieveByIdCliente(int idCliente) {
+        return this.retrieve("SELECT * FROM conta WHERE idCliente = " + idCliente);
     }
 
     // RetrieveBySimilarName

@@ -51,6 +51,8 @@ public class Conta extends javax.swing.JFrame {
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
+        jTextField1.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jTextField1.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         jTextField1.setText("saldo");
         jTextField1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
@@ -63,7 +65,7 @@ public class Conta extends javax.swing.JFrame {
         jTextField4.setText("conta");
 
         jSlider1.setMaximum(10000);
-        jSlider1.setMinimum(50);
+        jSlider1.setMinimum(100);
 
         jButton3.setText("Transferir");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
