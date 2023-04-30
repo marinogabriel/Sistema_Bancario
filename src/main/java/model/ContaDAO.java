@@ -54,7 +54,7 @@ public class ContaDAO extends DAO {
         try {
             Calendar dt = Calendar.getInstance();
             dt.setTime(rs.getDate("dataAbertura"));
-            conta = new Conta(rs.getInt("id"), dt, rs.getFloat("saldo"), rs.getFloat("limTransacao"), rs.getInt("idCliente"));
+            conta = new Conta(rs.getInt("id"), dt, rs.getString("tipo"), rs.getFloat("saldo"), rs.getFloat("limTransacao"), rs.getInt("idCliente"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }

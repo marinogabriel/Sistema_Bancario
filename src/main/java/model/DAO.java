@@ -85,18 +85,13 @@ public abstract class DAO {
                     + "limTransacao \n"
                     + "idCliente INTEGER); \n");
             executeUpdate(stmt);
-            // Table consulta:
+            // Table transfer:
             stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS transferencia( \n"
                     + "id INTEGER PRIMARY KEY, \n"
                     + "data DATE, \n"
                     + "valor FLOAT, \n"
                     + "idSaida INTEGER, \n"
                     + "idEntrada INTEGER, \n");
-            executeUpdate(stmt);
-            // Table species:
-            stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS especie( \n"
-                    + "id INTEGER PRIMARY KEY, \n"
-                    + "nome VARCHAR); \n");
             executeUpdate(stmt);
             return true;
         } catch (SQLException ex) {
