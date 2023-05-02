@@ -10,6 +10,7 @@ import model.Conta;
 import model.ContaDAO;
 import model.Cliente;
 import model.ClienteDAO;
+import view.ClienteTableModel;
 import view.ContaTableModel;
 import view.GenericTableModel;
 
@@ -36,7 +37,7 @@ public class Controller {
         return clienteSelecionado;
     }
     
-    public static Conta getContaSelecionado() {
+    public static Conta getContaSelecionada() {
         return contaSelecionada;
     }
     
@@ -45,9 +46,10 @@ public class Controller {
             clienteSelecionado = (Cliente) selected;
             clienteSelecionadoTextField.setText(clienteSelecionado.getNome());
             contaSelecionadaTextField.setText("");
-        }else if(selected instanceof Conta) {
+        }
+        else if(selected instanceof Conta) {
             contaSelecionada = (Conta) selected;
-            contaSelecionadaTextField.setText(contaSelecionada.getId());
+            contaSelecionadaTextField.setText(Integer.toString(contaSelecionada.getId()));
         }
     }
     
@@ -58,14 +60,14 @@ public class Controller {
         } else if(selected instanceof Conta) {
             contaSelecionadaTextField.setText("");
         }
-    }
+    }  
     
     public static boolean jRadioButtonClientes(JTable table) {
         setTableModel(table, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
         return true;
-    }    
+    }
     
-    public static boolean jRadioButtonAnimais(JTable table) {
+    public static boolean jRadioButtonContas(JTable table) {
         if(getClienteSelecionado() != null) {
             setTableModel(table, new ContaTableModel(ContaDAO.getInstance().retrieveByIdCliente(getClienteSelecionado().getId())));
             return true;
@@ -74,13 +76,15 @@ public class Controller {
             return false;
         }
     }
-    
-    public static boolean jRadioButtonConsultas(JTable table) {
-        setTableModel(table, new ConsultaTableModel(ConsultaDAO.getInstance().retrieveAll()));
-        return true;
+        
+    public static void apagaCliente(Cliente cliente) {
+        List<Conta> contas = ContaDAO.getInstance().retrieveByIdCliente(cliente.getId());
+        for(Conta conta : contas)
+            ContaDAO.getInstance().delete(conta);
+        ClienteDAO.getInstance().delete(cliente);
     }
     
-    public static boolean buscaCliente(JTable table, String text) {
+    /*public static boolean buscaCliente(JTable table, String text) {
         setTableModel(table, new ClienteTableModel(ClienteDAO.getInstance().retrieveBySimilarName(text)));
         return true;
     }
@@ -88,27 +92,6 @@ public class Controller {
     public static boolean buscaConta(JTable table, String text) {
         setTableModel(table, new ContaTableModel(ContaDAO.getInstance().retrieveBySimilarName(text)));
         return true;
-    }
-    
-    
-    public static Transferencia adicionaTranferencia() {
-        return ConsultaDAO.getInstance().create(Calendar.getInstance(),8,"","",contaSelecionada.getId(), veterinarioSelecionado.getId(),0, false);
-    }
-    
-    public static boolean atualizaBotaoNovo(JTable table) {
-        if((clienteSelecionado!=null)&&(contaSelecionada!=null)&&(veterinarioSelecionado!=null)) {
-            ((GenericTableModel) table.getModel()).addItem(adicionaConsulta());
-            return true;
-        }
-        else
-            return false;
-    }
-    
-    public static void apagaCliente(Cliente cliente) {
-        List<Conta> contas = ContaDAO.getInstance().retrieveByIdCliente(cliente.getId());
-        for(Conta conta : contas)
-            ContaDAO.getInstance().delete(conta);
-        ClienteDAO.getInstance().delete(cliente);
     }
     
     public static void filtraConsultas(JTable table, JToggleButton hoje, JToggleButton vet, JToggleButton pend) {
@@ -140,5 +123,25 @@ public class Controller {
         String query = "SELECT * FROM consulta "+where;
         ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
         table.repaint();
+    }*/
+    public static Conta adicionaConta() {
+        return ContaDAO.getInstance().create(Calendar.getInstance(),0, (float) 8.00,clienteSelecionado.getId());
+    }
+    
+    public static Cliente adicionaCliente() {
+        return ClienteDAO.getInstance().create("", "", Calendar.getInstance());
+    }
+    
+    public static boolean atualizaBotaoNovo(JTable table) {
+        if(table.getModel() instanceof ClienteTableModel){
+            ((GenericTableModel) table.getModel()).addItem(adicionaCliente());
+            return true;
+        }
+        else if(clienteSelecionado!=null) {
+            ((GenericTableModel) table.getModel()).addItem(adicionaConta());
+            return true;
+        }
+        else
+            return false;
     }
 }

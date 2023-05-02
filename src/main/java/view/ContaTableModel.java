@@ -24,8 +24,7 @@ public class ContaTableModel extends GenericTableModel {
             case 1:
                 return String.class;
             case 2:
-                return float.class;
-                
+                return float.class; 
             default:
                 throw new IndexOutOfBoundsException("columnIndex out of bounds");
         }

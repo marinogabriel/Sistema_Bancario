@@ -21,12 +21,12 @@ public class Conta {
     
     private int id;
     private Calendar dataAbertura;
-    private float saldo;
-    private float limTransacao;
+    private double saldo;
+    private double limTransacao;
     private String tipo; //originalmente era char mas pro tablemodel da problema
     private int idCliente;
 
-    public Conta(int id, Calendar dataAbertura, String tipo, float saldo, float limTransacao, int idCliente) {
+    public Conta(int id, Calendar dataAbertura, String tipo, double saldo, double limTransacao, int idCliente) {
         this.id = id;
         this.dataAbertura = dataAbertura;
         this.tipo = tipo;
@@ -51,19 +51,19 @@ public class Conta {
         return dataAbertura;
     }
 
-    public float getSaldo() {
+    public double getSaldo() {
         return saldo;
     }
 
-    public void setSaldo(float saldo) {
+    public void setSaldo(double saldo) {
         this.saldo = saldo;
     }
 
-    public float getLimTransacao() {
+    public double getLimTransacao() {
         return limTransacao;
     }
 
-    public void setLimTransacao(float limTransacao) {
+    public void setLimTransacao(double limTransacao) {
         this.limTransacao = limTransacao;
     }
 }

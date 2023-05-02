@@ -6,7 +6,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 public abstract class DAO {
-    public static final String DBURL = "jdbc:sqlite:SI405.db";
+    public static final String DBURL = "jdbc:sqlite:si405.db";
     private static Connection con;
     protected static SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
@@ -75,23 +75,23 @@ public abstract class DAO {
                     + "id INTEGER PRIMARY KEY, \n"
                     + "nome VARCHAR, \n"
                     + "cpf VARCHAR, \n"
-                    + "dataNasc VARCHAR, \n");
+                    + "dataNasc DATE); \n");
             executeUpdate(stmt);
             // Table conta:
             stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS conta( \n"
                     + "id INTEGER PRIMARY KEY, \n"
                     + "dataAbertura DATE, \n"
-                    + "saldo FLOAT, \n"
-                    + "limTransacao \n"
+                    + "saldo DOUBLE, \n"
+                    + "limTransacao DOUBLE, \n"
                     + "idCliente INTEGER); \n");
             executeUpdate(stmt);
             // Table transfer:
             stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS transferencia( \n"
                     + "id INTEGER PRIMARY KEY, \n"
                     + "data DATE, \n"
-                    + "valor FLOAT, \n"
+                    + "valor DOUBLE, \n"
                     + "idSaida INTEGER, \n"
-                    + "idEntrada INTEGER, \n");
+                    + "idEntrada INTEGER); \n");
             executeUpdate(stmt);
             return true;
         } catch (SQLException ex) {

@@ -19,20 +19,21 @@ public class ContaDAO extends DAO {
         getConnection();
         createTable();
     }
-
+    
     // Singleton
     public static ContaDAO getInstance() {
         return (instance==null?(instance = new ContaDAO()):instance);
     }
 
 // CRUD    
-    public Conta create(String nome, String cpf, Calendar dataNasc) {
+    public Conta create(Calendar dataAbertura, float saldo, float limTransacao, int idCliente) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (nome, cpf, dataNasc) VALUES (?,?,?)");
-            stmt.setString(1, nome);
-            stmt.setString(2, cpf);
-            stmt.setDate(3, new java.sql.Date(dataNasc.getTimeInMillis()));
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, limTransacao, idCliente) VALUES (?,?,?,?)");
+            stmt.setDate(1, new java.sql.Date(dataAbertura.getTimeInMillis()));
+            stmt.setFloat(2, saldo);
+            stmt.setFloat(3, limTransacao);
+            stmt.setInt(4, idCliente);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -107,8 +108,8 @@ public class ContaDAO extends DAO {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE conta SET dataAbertura=?, saldo=?, limTransacao=?, idConta=? WHERE id=?");
             stmt.setDate(1, new Date(conta.getDataAbertura().getTimeInMillis()));
-            stmt.setFloat(2, conta.getSaldo());
-            stmt.setFloat(3, conta.getLimTransacao());
+            stmt.setDouble(2, conta.getSaldo());
+            stmt.setDouble(3, conta.getLimTransacao());
             stmt.setInt(4, conta.getId());
             executeUpdate(stmt);
         } catch (SQLException e) {
