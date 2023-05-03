@@ -81,6 +81,7 @@ public abstract class DAO {
             stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS conta( \n"
                     + "id INTEGER PRIMARY KEY, \n"
                     + "dataAbertura DATE, \n"
+                    + "tipo VARCHAR, \n"
                     + "saldo DOUBLE, \n"
                     + "limTransacao DOUBLE, \n"
                     + "idCliente INTEGER); \n");

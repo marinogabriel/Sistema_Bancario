@@ -26,14 +26,15 @@ public class ContaDAO extends DAO {
     }
 
 // CRUD    
-    public Conta create(Calendar dataAbertura, float saldo, float limTransacao, int idCliente) {
+    public Conta create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int idCliente) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, limTransacao, idCliente) VALUES (?,?,?,?)");
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, limTransacao, idCliente) VALUES (?,?,?,?,?)");
             stmt.setDate(1, new java.sql.Date(dataAbertura.getTimeInMillis()));
-            stmt.setFloat(2, saldo);
-            stmt.setFloat(3, limTransacao);
-            stmt.setInt(4, idCliente);
+            stmt.setDouble(2, saldo);
+            stmt.setString(3, tipo);
+            stmt.setDouble(4, limTransacao);
+            stmt.setInt(5, idCliente);
             executeUpdate(stmt);
         } catch (SQLException ex) {
             Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
@@ -106,12 +107,24 @@ public class ContaDAO extends DAO {
     public void update(Conta conta) {
         try {
             PreparedStatement stmt;
-            stmt = DAO.getConnection().prepareStatement("UPDATE conta SET dataAbertura=?, saldo=?, limTransacao=?, idConta=? WHERE id=?");
+            stmt = DAO.getConnection().prepareStatement("UPDATE conta SET dataAbertura=?, saldo=?, tipo=?, limTransacao=?, idCliente=? WHERE id=?");
             stmt.setDate(1, new Date(conta.getDataAbertura().getTimeInMillis()));
             stmt.setDouble(2, conta.getSaldo());
-            stmt.setDouble(3, conta.getLimTransacao());
-            stmt.setInt(4, conta.getId());
+            stmt.setString(3, conta.getTipo());
+            stmt.setDouble(4, conta.getLimTransacao());
+            stmt.setInt(5, conta.getId());
             executeUpdate(stmt);
+        } catch (SQLException e) {
+            System.err.println("Exception: " + e.getMessage());
+        }
+    }
+    
+    public void deposita(Conta conta, Double deposito) {
+        try {
+            PreparedStatement stmt;
+            stmt = DAO.getConnection().prepareStatement("UPDATE conta SET saldo=? WHERE id=?");
+            stmt.setDouble(1, conta.getSaldo() + deposito);
+            stmt.setInt(2, conta.getId());
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }

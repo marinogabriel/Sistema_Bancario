@@ -13,21 +13,35 @@ import model.ClienteDAO;
 import view.ClienteTableModel;
 import view.ContaTableModel;
 import view.GenericTableModel;
+import view.TelaConta;
 
 
 public class Controller {
     
+    TelaConta conta = new TelaConta();
     private static Cliente clienteSelecionado = null;
-    private static Conta contaSelecionada = null;
+    public static Conta contaSelecionada = null;
     
     private static JTextField clienteSelecionadoTextField = null;
     private static JTextField contaSelecionadaTextField = null;
+    
+    public static JTextField saldoTextField = null;
+    
+    public static JTextField saldoInputTextField = null;
+    public static JTextField contaInputTextField = null;
+    public static JTextField valorInputTextField = null;
 
 
     public static void setTextFields(JTextField cliente, JTextField conta) {
         clienteSelecionadoTextField = cliente;
         contaSelecionadaTextField = conta;
-    }     
+    }
+    
+    public static void setTextFieldsConta(JTextField saldo, JTextField conta, JTextField valor) {
+        saldoInputTextField = saldo;
+        contaInputTextField = conta;
+        valorInputTextField = valor;
+    }  
     
     public static void setTableModel(JTable table, GenericTableModel tableModel) {
         table.setModel(tableModel);
@@ -83,49 +97,9 @@ public class Controller {
             ContaDAO.getInstance().delete(conta);
         ClienteDAO.getInstance().delete(cliente);
     }
-    
-    /*public static boolean buscaCliente(JTable table, String text) {
-        setTableModel(table, new ClienteTableModel(ClienteDAO.getInstance().retrieveBySimilarName(text)));
-        return true;
-    }
-    
-    public static boolean buscaConta(JTable table, String text) {
-        setTableModel(table, new ContaTableModel(ContaDAO.getInstance().retrieveBySimilarName(text)));
-        return true;
-    }
-    
-    public static void filtraConsultas(JTable table, JToggleButton hoje, JToggleButton vet, JToggleButton pend) {
-        String where = "WHERE ";
-        if(hoje.isSelected()) {
-            where += "data BETWEEN 1670814000000 and 1670900400000 ";
-            if(vet.isSelected()) {
-                
-                where += "AND id_veterinario = "+ veterinarioSelecionado.getId();
-                if(pend.isSelected())
-                    where += " AND finalizado = false";
-            }
-            else if(pend.isSelected())
-                where += "AND finalizado = false";
-        }
-        else if(vet.isSelected()) {
-            where += "id_veterinario = "+ veterinarioSelecionado.getId();
-            if(pend.isSelected()) {
-                where += " AND finalizado = false";
-            }
-        }
-        else if(pend.isSelected()) {
-            where += "finalizado = false";
-        }
-        else {
-            where = "";
-            where += "ORDER BY data, hora";
-        }
-        String query = "SELECT * FROM consulta "+where;
-        ((GenericTableModel) table.getModel()).addListOfItems(ConsultaDAO.getInstance().retrieve(query));
-        table.repaint();
-    }*/
+        
     public static Conta adicionaConta() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(),0, (float) 8.00,clienteSelecionado.getId());
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Comum", (double) 8, clienteSelecionado.getId());
     }
     
     public static Cliente adicionaCliente() {
