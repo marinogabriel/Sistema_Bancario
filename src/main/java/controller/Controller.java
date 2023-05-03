@@ -18,14 +18,16 @@ import view.TelaConta;
 public class Controller {
     
     TelaConta conta = new TelaConta();
+    
     private static Cliente clienteSelecionado = null;
     public static Conta contaSelecionada = null;
     
     private static JTextField clienteSelecionadoTextField = null;
     private static JTextField contaSelecionadaTextField = null;
     
-    public static JTextField saldoTextField = null;
+    private static JTable jTable = null;
     
+    public static JTextField saldoTextField = null;
     public static JTextField saldoInputTextField = null;
     public static JTextField contaInputTextField = null;
     public static JTextField valorInputTextField = null;
@@ -34,6 +36,14 @@ public class Controller {
     public static void setTextFields(JTextField cliente, JTextField conta) {
         clienteSelecionadoTextField = cliente;
         contaSelecionadaTextField = conta;
+    }
+    
+    public static void setJTable(JTable table) {
+        jTable = table;
+    }
+
+    public static JTable getJTable() {
+        return jTable;
     }
     
     public static void setTextFieldsConta(JTextField saldo, JTextField conta, JTextField valor, JTextField saldo2) {
@@ -122,6 +132,7 @@ public class Controller {
     public static boolean atualizaNovoEspecial(JTable table) {
         if(clienteSelecionado!=null) {
             ((GenericTableModel) table.getModel()).addItem(adicionaContaEspecial());
+            setSelected(ContaDAO.getInstance().retrieveLast());
             return true;
         }
         else

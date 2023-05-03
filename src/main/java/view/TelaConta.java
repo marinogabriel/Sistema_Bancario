@@ -2,7 +2,6 @@ package view;
 
 import controller.Controller;
 import static controller.Controller.contaSelecionada;
-import static controller.Controller.jRadioButtonClientes;
 import static controller.Controller.saldoTextField;
 import model.Conta;
 import model.ContaDAO;
@@ -268,6 +267,7 @@ public class TelaConta extends javax.swing.JFrame {
         contaSelecionada.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
         ContaDAO.getInstance().update(contaSelecionada);
+        Controller.jRadioButtonContas(Controller.getJTable());
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
@@ -278,15 +278,21 @@ public class TelaConta extends javax.swing.JFrame {
         }
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
         ContaDAO.getInstance().update(contaSelecionada);
+        Controller.jRadioButtonContas(Controller.getJTable());
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        contaSelecionada.saca(Double.parseDouble(Controller.valorInputTextField.getText()));
+        if(contaSelecionada.getLimCredito() > 0) {
+            contaSelecionada.saqueEspecial(Double.parseDouble(Controller.valorInputTextField.getText()));
+        } else {
+            contaSelecionada.saca(Double.parseDouble(Controller.valorInputTextField.getText()));
+        }
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
         Conta contaAlvo = ContaDAO.getInstance().retrieveById(Integer.parseInt(Controller.contaInputTextField.getText()));
         contaAlvo.deposita(Double.parseDouble(Controller.valorInputTextField.getText()));
         ContaDAO.getInstance().update(contaSelecionada);
         ContaDAO.getInstance().update(contaAlvo);
+        Controller.jRadioButtonContas(Controller.getJTable());
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
