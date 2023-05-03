@@ -2,6 +2,7 @@ package view;
 
 import controller.Controller;
 import static controller.Controller.contaSelecionada;
+import static controller.Controller.jRadioButtonClientes;
 import static controller.Controller.saldoTextField;
 import model.Conta;
 import model.ContaDAO;
@@ -60,6 +61,11 @@ public class TelaConta extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowClosing(java.awt.event.WindowEvent evt) {
+                formWindowClosing(evt);
+            }
+        });
 
         jButton1.setText("Depositar");
         jButton1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -278,7 +284,7 @@ public class TelaConta extends javax.swing.JFrame {
         contaSelecionada.saca(Double.parseDouble(Controller.valorInputTextField.getText()));
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
         Conta contaAlvo = ContaDAO.getInstance().retrieveById(Integer.parseInt(Controller.contaInputTextField.getText()));
-        contaAlvo.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        contaAlvo.deposita(Double.parseDouble(Controller.valorInputTextField.getText()));
         ContaDAO.getInstance().update(contaSelecionada);
         ContaDAO.getInstance().update(contaAlvo);
     }//GEN-LAST:event_jButton3ActionPerformed
@@ -294,6 +300,10 @@ public class TelaConta extends javax.swing.JFrame {
         contaSelecionada.setLimTransacao(jSlider1.getValue());
         ContaDAO.getInstance().update(contaSelecionada);
     }//GEN-LAST:event_jSlider1StateChanged
+
+    private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
+
+    }//GEN-LAST:event_formWindowClosing
 
     /**
      * @param args the command line arguments
