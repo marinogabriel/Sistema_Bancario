@@ -3,8 +3,8 @@ package view;
 import controller.Controller;
 import static controller.Controller.contaSelecionada;
 import static controller.Controller.saldoTextField;
+import model.Conta;
 import model.ContaDAO;
-import model.ContaEspecialDAO;
 
 /**
  *
@@ -22,9 +22,7 @@ public class TelaConta extends javax.swing.JFrame {
 
     private void myInitComponents() {
         jTextField2.setText("");
-        jTextField3.setText("");
         jTextField4.setText("");
-        jTextField5.setText("");
         jTextField6.setText("");
         Controller.setTextFieldsConta(jTextField2, jTextField4, jTextField6, jTextField1);
     }
@@ -59,6 +57,7 @@ public class TelaConta extends javax.swing.JFrame {
         jSlider2 = new javax.swing.JSlider();
         jTextField3 = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -95,9 +94,19 @@ public class TelaConta extends javax.swing.JFrame {
 
         jSlider1.setMaximum(10000);
         jSlider1.setMinimum(100);
+        jSlider1.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider1StateChanged(evt);
+            }
+        });
 
         jButton3.setText("Transferir");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 14)); // NOI18N
         jLabel2.setText("Transferências");
@@ -125,11 +134,18 @@ public class TelaConta extends javax.swing.JFrame {
 
         jSlider2.setMaximum(10000);
         jSlider2.setOpaque(true);
+        jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                jSlider2StateChanged(evt);
+            }
+        });
 
         jTextField3.setEditable(false);
         jTextField3.setText("jTextField3");
 
         jLabel9.setText("Limite de crédito");
+
+        jLabel10.setText("Dia aniversário:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -143,8 +159,10 @@ public class TelaConta extends javax.swing.JFrame {
                             .addComponent(jSeparator2, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGap(32, 32, 32)
+                                .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jTextField1)
                             .addComponent(jSeparator1)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
@@ -191,7 +209,9 @@ public class TelaConta extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel8, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(jLabel10))
                         .addGap(7, 7, 7)))
                 .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(3, 3, 3)
@@ -241,16 +261,39 @@ public class TelaConta extends javax.swing.JFrame {
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         contaSelecionada.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
-        ContaDAO.getInstance().deposita(contaSelecionada, contaSelecionada.getSaldo());
-        //Controller.atualizaTransacao(view.Main.jTable1);
+        ContaDAO.getInstance().update(contaSelecionada);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        contaSelecionada.saca(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        if(contaSelecionada.getLimCredito() > 0) {
+            contaSelecionada.saqueEspecial(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        } else {
+            contaSelecionada.saca(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        }
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
-        if("Comum".equals(contaSelecionada.getTipo()))
-            ContaDAO.getInstance().update(contaSelecionada);
+        ContaDAO.getInstance().update(contaSelecionada);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        contaSelecionada.saca(Double.parseDouble(Controller.valorInputTextField.getText()));
+        saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        Conta contaAlvo = ContaDAO.getInstance().retrieveById(Integer.parseInt(Controller.contaInputTextField.getText()));
+        contaAlvo.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        ContaDAO.getInstance().update(contaSelecionada);
+        ContaDAO.getInstance().update(contaAlvo);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
+        jTextField3.setText(Integer.toString(jSlider2.getValue()));
+        contaSelecionada.setLimCredito(jSlider2.getValue());
+        ContaDAO.getInstance().update(contaSelecionada);
+    }//GEN-LAST:event_jSlider2StateChanged
+
+    private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
+        jTextField5.setText(Integer.toString(jSlider1.getValue()));
+        contaSelecionada.setLimTransacao(jSlider1.getValue());
+        ContaDAO.getInstance().update(contaSelecionada);
+    }//GEN-LAST:event_jSlider1StateChanged
 
     /**
      * @param args the command line arguments
@@ -295,6 +338,7 @@ public class TelaConta extends javax.swing.JFrame {
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     public javax.swing.JLabel jLabel1;
+    public javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;

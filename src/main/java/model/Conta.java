@@ -1,11 +1,7 @@
 package model;
 import java.util.Calendar;
 
-/*RF02 - O sistema deve permitir o cadastro de contas bancárias dos clientes. Existem três tipos de contas
-que podem ser criadas: Conta Comum, Conta Especial e Conta Poupança. Cada conta
-bancária deve estar associada a um único cliente. No entanto um cliente pode ter mais de uma
-conta.
-RF03 - Devem ser permitidos depósitos e saques nas contas bancárias. Devem também ser permitidas
+/*RF03 - Devem ser permitidos depósitos e saques nas contas bancárias. Devem também ser permitidas
 transferências de valores entre contas bancárias.
 RF04 - Uma Conta Comum possui uma data de abertura, um saldo e um limite de valor por
 transação, que deve ser aplicado às operações de saque e transferência.
@@ -23,24 +19,56 @@ public class Conta {
     protected double saldo;
     private double limTransacao;
     private String tipo; //originalmente era char mas pro tablemodel da problema
+    private int dia;
+    private int limCredito;
     private int idCliente;
 
-    public Conta(int id, Calendar dataAbertura, String tipo, double saldo, double limTransacao, int idCliente) {
+    public Conta(int id, Calendar dataAbertura, double saldo, double limTransacao, String tipo, int dia, int limCredito, int idCliente) {
         this.id = id;
         this.dataAbertura = dataAbertura;
-        this.tipo = tipo;
         this.saldo = saldo;
         this.limTransacao = limTransacao;
+        this.tipo = tipo;
+        this.dia = dia;
+        this.limCredito = limCredito;
         this.idCliente = idCliente;
     }
 
+    public int getDia() {
+        return dia;
+    }
+
+    public int getLimCredito() {
+        return limCredito;
+    }
+
+    public void setLimCredito(int limCredito) {
+        this.limCredito = limCredito;
+    }
+
+    
     public void deposita(double valor) {
         this.saldo = saldo + valor;
     }
     
+    public boolean saqueEspecial(double valor) {
+        if(valor > this.limTransacao) {
+            return false;
+        }
+        else if(this.saldo - valor >= -this.limCredito) {
+            this.saldo -= valor;
+            return true;
+        }
+        else
+            return false;
+    }
+    
     public boolean saca(double valor) {
-        if(this.saldo - valor >= 0) {
-            this.saldo = saldo - valor;
+        if(valor > this.limTransacao) {
+            return false;
+        }
+        else if(this.saldo - valor >= 0) {
+            this.saldo -= valor;
             return true;
         } 
         else {

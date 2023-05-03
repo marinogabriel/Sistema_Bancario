@@ -5,7 +5,6 @@ import java.util.Calendar;
 import java.util.List;
 import javax.swing.JTable;
 import javax.swing.JTextField;
-import javax.swing.JToggleButton;
 import model.Conta;
 import model.ContaDAO;
 import model.Cliente;
@@ -90,17 +89,17 @@ public class Controller {
         ClienteDAO.getInstance().delete(cliente);
     }
         
-    public static Conta adicionaContaComum() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Comum", (double) 100, clienteSelecionado.getId());
+    public static Conta adicionaConta() {
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Comum", (double) 100, 0, 0, clienteSelecionado.getId());
 
     }
     
     public static Conta adicionaContaEspecial() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Especial", (double) 100, 100, clienteSelecionado.getId());
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Especial", (double) 100, 0, 100, clienteSelecionado.getId());
     }
     
     public static Conta adicionaContaPoupança() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Poupança", Calendar.DAY_OF_MONTH, (double) 100, clienteSelecionado.getId());
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Poupança", (double) 100, Calendar.MONTH + 1, 0 , clienteSelecionado.getId());
     }
     
     public static Cliente adicionaCliente() {
@@ -113,7 +112,7 @@ public class Controller {
             return true;
         }
         else if(clienteSelecionado!=null) {
-            ((GenericTableModel) table.getModel()).addItem(adicionaContaComum());
+            ((GenericTableModel) table.getModel()).addItem(adicionaConta());
             return true;
         }
         else
@@ -142,4 +141,5 @@ public class Controller {
         setTableModel(table, new ContaTableModel(ContaDAO.getInstance().retrieveByIdCliente(getClienteSelecionado().getId())));
         return true;
     }
+
 }

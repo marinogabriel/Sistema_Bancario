@@ -7,7 +7,6 @@ package view;
 import controller.Controller;
 import static controller.Controller.contaSelecionada;
 import static controller.Controller.setTableModel;
-import java.util.Calendar;
 import model.ClienteDAO;
 import model.ContaDAO;
 
@@ -255,20 +254,23 @@ public class Main extends javax.swing.JFrame {
             conta.jSlider2.setVisible(false);
             conta.jLabel8.setVisible(false);
             conta.jLabel9.setVisible(false);
+            conta.jLabel10.setVisible(false);
         }
         else if("Especial".equals(Controller.contaSelecionada.getTipo())) {
             conta.jLabel8.setVisible(false);
             conta.jTextField3.setVisible(true);
             conta.jSlider2.setVisible(true);
             conta.jLabel9.setVisible(true);
-            //conta.jTextField3.setText(Double.toString(contaSelecionada.getLimiteCredito()));
+            conta.jLabel10.setVisible(false);
+            conta.jTextField3.setText(Double.toString(contaSelecionada.getLimCredito()));
         }
         else {
             conta.jSlider2.setVisible(false);
             conta.jTextField3.setVisible(false);
             conta.jLabel9.setVisible(false);
             conta.jLabel8.setVisible(true);
-            //conta.jLabel8.setText(Integer.toString(contaSelecionada.getDia()));
+            conta.jLabel10.setVisible(true);
+            conta.jLabel8.setText(Integer.toString(contaSelecionada.getDia()));
         }
         if(Controller.contaSelecionada != null) {
             conta.setVisible(true);
@@ -309,10 +311,10 @@ public class Main extends javax.swing.JFrame {
             if(jRadioButton3.isSelected()) {
                 Controller.atualizaBotaoNovo(jTable1);
             }
-            else if(jRadioButton4.isSelected()) {
+            if(jRadioButton4.isSelected()) {
                 Controller.atualizaNovoEspecial(jTable1);
             }
-            else if(jRadioButton5.isSelected()) {
+            if(jRadioButton5.isSelected()) {
                 Controller.atualizaNovoPoupança(jTable1);
             }
             Controller.jRadioButtonContas(jTable1);
@@ -338,8 +340,6 @@ public class Main extends javax.swing.JFrame {
     private void jTable1MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MousePressed
         Controller.setSelected(((GenericTableModel)jTable1.getModel()).getItem(jTable1.getSelectedRow()));
         if(jTable1.getModel() instanceof ContaTableModel) {
-            conta.jTextField1.setText(String.valueOf(Controller.getContaSelecionada().getSaldo()));
-            conta.jTextField5.setText(String.valueOf(Controller.getContaSelecionada().getLimTransacao()));
             conta.jLabel1.setText("Conta Número: " + String.valueOf(Controller.getContaSelecionada().getId()));
         }
     }//GEN-LAST:event_jTable1MousePressed
