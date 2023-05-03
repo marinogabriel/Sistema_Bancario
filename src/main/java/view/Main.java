@@ -5,6 +5,7 @@
 package view;
 
 import controller.Controller;
+import static controller.Controller.contaSelecionada;
 import static controller.Controller.setTableModel;
 import java.util.Calendar;
 import model.ClienteDAO;
@@ -260,15 +261,19 @@ public class Main extends javax.swing.JFrame {
             conta.jTextField3.setVisible(true);
             conta.jSlider2.setVisible(true);
             conta.jLabel9.setVisible(true);
+            //conta.jTextField3.setText(Double.toString(contaSelecionada.getLimiteCredito()));
         }
         else {
             conta.jSlider2.setVisible(false);
             conta.jTextField3.setVisible(false);
             conta.jLabel9.setVisible(false);
             conta.jLabel8.setVisible(true);
+            //conta.jLabel8.setText(Integer.toString(contaSelecionada.getDia()));
         }
         if(Controller.contaSelecionada != null) {
             conta.setVisible(true);
+            conta.jTextField1.setText(Double.toString(contaSelecionada.getSaldo()));
+            conta.jTextField5.setText(Double.toString(contaSelecionada.getLimTransacao()));
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -394,7 +399,7 @@ public class Main extends javax.swing.JFrame {
     public javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTable jTable1;
+    public javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables

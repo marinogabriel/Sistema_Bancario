@@ -4,6 +4,7 @@ import controller.Controller;
 import static controller.Controller.contaSelecionada;
 import static controller.Controller.saldoTextField;
 import model.ContaDAO;
+import model.ContaEspecialDAO;
 
 /**
  *
@@ -25,7 +26,7 @@ public class TelaConta extends javax.swing.JFrame {
         jTextField4.setText("");
         jTextField5.setText("");
         jTextField6.setText("");
-        Controller.setTextFieldsConta(jTextField2, jTextField4, jTextField6);
+        Controller.setTextFieldsConta(jTextField2, jTextField4, jTextField6, jTextField1);
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -71,6 +72,11 @@ public class TelaConta extends javax.swing.JFrame {
 
         jButton2.setText("Sacar");
         jButton2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         jTextField1.setEditable(false);
         jTextField1.setBackground(new java.awt.Color(204, 204, 204));
@@ -116,7 +122,6 @@ public class TelaConta extends javax.swing.JFrame {
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("Dia aniversario");
-        jLabel8.setEnabled(false);
 
         jSlider2.setMaximum(10000);
         jSlider2.setOpaque(true);
@@ -125,7 +130,6 @@ public class TelaConta extends javax.swing.JFrame {
         jTextField3.setText("jTextField3");
 
         jLabel9.setText("Limite de crédito");
-        jLabel9.setEnabled(false);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -235,9 +239,18 @@ public class TelaConta extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ContaDAO.getInstance().deposita(Controller.contaSelecionada, Double.parseDouble(Controller.saldoInputTextField.getText()));//NAO FUNCIONA GRR
+        contaSelecionada.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
         saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        ContaDAO.getInstance().deposita(contaSelecionada, contaSelecionada.getSaldo());
+        //Controller.atualizaTransacao(view.Main.jTable1);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        contaSelecionada.saca(Double.parseDouble(Controller.saldoInputTextField.getText()));
+        saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        if("Comum".equals(contaSelecionada.getTipo()))
+            ContaDAO.getInstance().update(contaSelecionada);
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     /**
      * @param args the command line arguments

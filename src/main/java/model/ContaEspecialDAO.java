@@ -12,21 +12,21 @@ import java.util.logging.Logger;
 import static model.DAO.getConnection;
 
 
-public class ContaDAO extends DAO {
-    private static ContaDAO instance;
+public class ContaEspecialDAO extends DAO {
+    private static ContaEspecialDAO instance;
 
-    private ContaDAO() {
+    private ContaEspecialDAO() {
         getConnection();
         createTable();
     }
     
     // Singleton
-    public static ContaDAO getInstance() {
-        return (instance==null?(instance = new ContaDAO()):instance);
+    public static ContaEspecialDAO getInstance() {
+        return (instance==null?(instance = new ContaEspecialDAO()):instance);
     }
 
 // CRUD    
-    public Conta create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int idCliente) {
+    public ContaEspecial create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int idCliente) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, limTransacao, idCliente) VALUES (?,?,?,?,?)");
@@ -37,12 +37,12 @@ public class ContaDAO extends DAO {
             stmt.setInt(5, idCliente);
             executeUpdate(stmt);
         } catch (SQLException ex) {
-            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContaEspecialDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.retrieveById(lastId("conta","id"));
     }
     
-    public Conta create(Calendar dataAbertura, double saldo, String tipo, int dia, double limTransacao, int idCliente) {
+    public ContaEspecial create(Calendar dataAbertura, double saldo, String tipo, int dia, double limTransacao, int idCliente) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, dia, limTransacao, idCliente) VALUES (?,?,?,?,?,?)");
@@ -54,12 +54,12 @@ public class ContaDAO extends DAO {
             stmt.setInt(6, idCliente);
             executeUpdate(stmt);
         } catch (SQLException ex) {
-            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContaEspecialDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.retrieveById(lastId("conta","id"));
     }
     
-    public Conta create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int limCredito, int idCliente) {
+    public ContaEspecial create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int limCredito, int idCliente) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, limTransacao, limCredito, idCliente) VALUES (?,?,?,?,?,?)");
@@ -71,45 +71,21 @@ public class ContaDAO extends DAO {
             stmt.setInt(6, idCliente);
             executeUpdate(stmt);
         } catch (SQLException ex) {
-            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(ContaEspecialDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
         return this.retrieveById(lastId("conta","id"));
     }
     
     /* Uma pequena gambiarra, depois explico...
     public boolean isLastEmpty(){
-        Conta lastConta = this.retrieveById(lastId("conta","id"));
-        if (lastConta != null) {
-            return lastConta.getNome().isBlank();
+        ContaEspecial lastContaEspecial = this.retrieveById(lastId("conta","id"));
+        if (lastContaEspecial != null) {
+            return lastContaEspecial.getNome().isBlank();
         }
         return false;
     }*/
-
-    private Conta buildObject(ResultSet rs) {
-        Conta conta = null;
-        try {
-            Calendar dt = Calendar.getInstance();
-            dt.setTime(rs.getDate("dataAbertura"));
-            conta = new Conta(rs.getInt("id"), dt, rs.getString("tipo"), rs.getDouble("saldo"), rs.getDouble("limTransacao"), rs.getInt("idCliente"));
-        } catch (SQLException e) {
-            System.err.println("Exception: " + e.getMessage());
-        }
-        return conta;
-    }
-
-    private Conta buildObjectPoupança(ResultSet rs) {
-        ContaPoupança conta = null;
-        try {
-            Calendar dt = Calendar.getInstance();
-            dt.setTime(rs.getDate("dataAbertura"));
-            conta = new ContaPoupança(rs.getInt("dia"), rs.getInt("id"), dt, rs.getString("tipo"), rs.getDouble("saldo"), rs.getDouble("limTransacao"), rs.getInt("idCliente"));
-        } catch (SQLException e) {
-            System.err.println("Exception: " + e.getMessage());
-        }
-        return conta;
-    }
     
-    private ContaEspecial buildObjectEspecial(ResultSet rs) {
+    private ContaEspecial buildObject(ResultSet rs) {
         ContaEspecial conta = null;
         try {
             Calendar dt = Calendar.getInstance();
@@ -123,7 +99,7 @@ public class ContaDAO extends DAO {
     }
     // Generic Retriever
     public List retrieve(String query) {
-        List<Conta> contas = new ArrayList();
+        List<ContaEspecial> contas = new ArrayList();
         ResultSet rs = getResultSet(query);
         try {
             while (rs.next()) {
@@ -146,12 +122,12 @@ public class ContaDAO extends DAO {
     }
 
     // RetrieveById
-    public Conta retrieveById(int id) {
-        List<Conta> contas = this.retrieve("SELECT * FROM conta WHERE id = " + id);
+    public ContaEspecial retrieveById(int id) {
+        List<ContaEspecial> contas = this.retrieve("SELECT * FROM conta WHERE id = " + id);
         return (contas.isEmpty()?null:contas.get(0));
     }
     
-    // RetrieveByIdConta
+    // RetrieveByIdContaEspecial
     public List retrieveByIdCliente(int idCliente) {
         return this.retrieve("SELECT * FROM conta WHERE idCliente = " + idCliente);
     }
@@ -162,7 +138,7 @@ public class ContaDAO extends DAO {
     }    
         
     // Update
-    public void update(Conta conta) {
+    public void update(ContaEspecial conta) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE conta SET dataAbertura=?, saldo=?, tipo=?, limTransacao=?, idCliente=? WHERE id=?");
@@ -177,7 +153,7 @@ public class ContaDAO extends DAO {
         }
     }
     
-    public void deposita(Conta conta, Double deposito) {
+    public void deposita(ContaEspecial conta, Double deposito) {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE conta SET saldo=? WHERE id=?");
@@ -188,7 +164,7 @@ public class ContaDAO extends DAO {
         }
     }
         // Delete   
-    public void delete(Conta conta) {
+    public void delete(ContaEspecial conta) {
         PreparedStatement stmt;
         try {
             stmt = DAO.getConnection().prepareStatement("DELETE FROM conta WHERE id = ?");

@@ -37,10 +37,11 @@ public class Controller {
         contaSelecionadaTextField = conta;
     }
     
-    public static void setTextFieldsConta(JTextField saldo, JTextField conta, JTextField valor) {
+    public static void setTextFieldsConta(JTextField saldo, JTextField conta, JTextField valor, JTextField saldo2) {
         saldoInputTextField = saldo;
         contaInputTextField = conta;
         valorInputTextField = valor;
+        saldoTextField = saldo2;
     }  
     
     public static void setTableModel(JTable table, GenericTableModel tableModel) {
@@ -95,11 +96,11 @@ public class Controller {
     }
     
     public static Conta adicionaContaEspecial() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Especial", (double) 100, clienteSelecionado.getId());
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Especial", (double) 100, 100, clienteSelecionado.getId());
     }
     
     public static Conta adicionaContaPoupança() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Poupança", (double) 100, clienteSelecionado.getId());
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Poupança", Calendar.DAY_OF_MONTH, (double) 100, clienteSelecionado.getId());
     }
     
     public static Cliente adicionaCliente() {
@@ -135,5 +136,10 @@ public class Controller {
         }
         else
             return false;
+    }
+    
+    public static boolean atualizaTransacao(JTable table) {
+        setTableModel(table, new ContaTableModel(ContaDAO.getInstance().retrieveByIdCliente(getClienteSelecionado().getId())));
+        return true;
     }
 }
