@@ -26,6 +26,12 @@ public class Main extends javax.swing.JFrame {
     private void myInitComponents() {
         buttonGroup1.add(jRadioButton1);
         buttonGroup1.add(jRadioButton2);
+        buttonGroup2.add(jRadioButton3);
+        buttonGroup2.add(jRadioButton4);
+        buttonGroup2.add(jRadioButton5);
+        jRadioButton3.setVisible(false);
+        jRadioButton4.setVisible(false);
+        jRadioButton5.setVisible(false);
         jTextField1.setText("");
         jTextField2.setText("");
         jRadioButton1.setSelected(true);
@@ -45,6 +51,7 @@ public class Main extends javax.swing.JFrame {
         jComboBox3 = new javax.swing.JComboBox<>();
         jComboBox2 = new javax.swing.JComboBox<>();
         jComboBox1 = new javax.swing.JComboBox<>();
+        buttonGroup2 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jTextField1 = new javax.swing.JTextField();
@@ -58,6 +65,9 @@ public class Main extends javax.swing.JFrame {
         jLabel7 = new javax.swing.JLabel();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jRadioButton3 = new javax.swing.JRadioButton();
+        jRadioButton4 = new javax.swing.JRadioButton();
+        jRadioButton5 = new javax.swing.JRadioButton();
 
         jComboBox3.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1910", "1911", "1912", "1913", "1914", "1915", "1916", "1917", "1918", "1919", "1920", "1921", "1922", "1923", "1924", "1925", "1926", "1927", "1928", "1929", "1930", "1931", "1932", "1933", "1934", "1935", "1936", "1937", "1938", "1939", "1940", "1941", "1942", "1943", "1944", "1945", "1946", "1947", "1948", "1949", "1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020" }));
 
@@ -145,6 +155,12 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jRadioButton3.setText("Comum");
+
+        jRadioButton4.setText("Especial");
+
+        jRadioButton5.setText("Poupança");
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -154,15 +170,6 @@ public class Main extends javax.swing.JFrame {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addComponent(jRadioButton1)
-                        .addGap(18, 18, 18)
-                        .addComponent(jRadioButton2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton2)
-                        .addGap(26, 26, 26)
-                        .addComponent(jButton3)
-                        .addGap(14, 14, 14))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel1Layout.createSequentialGroup()
@@ -176,7 +183,26 @@ public class Main extends javax.swing.JFrame {
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(jTextField2)
                                     .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 539, Short.MAX_VALUE))))
-                        .addContainerGap(15, Short.MAX_VALUE))))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton1)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(jButton2)
+                                .addGap(22, 22, 22))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jRadioButton3)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton4)
+                                .addGap(18, 18, 18)
+                                .addComponent(jRadioButton5)
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(4, 4, 4)
+                        .addComponent(jButton3)
+                        .addGap(14, 14, 14))))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -199,7 +225,12 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jRadioButton2)
                     .addComponent(jButton2)
                     .addComponent(jButton3))
-                .addGap(29, 29, 29)
+                .addGap(3, 3, 3)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jRadioButton3)
+                    .addComponent(jRadioButton4)
+                    .addComponent(jRadioButton5))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -218,6 +249,24 @@ public class Main extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        if("Comum".equals(Controller.contaSelecionada.getTipo())) {
+            conta.jTextField3.setVisible(false);
+            conta.jSlider2.setVisible(false);
+            conta.jLabel8.setVisible(false);
+            conta.jLabel9.setVisible(false);
+        }
+        else if("Especial".equals(Controller.contaSelecionada.getTipo())) {
+            conta.jLabel8.setVisible(false);
+            conta.jTextField3.setVisible(true);
+            conta.jSlider2.setVisible(true);
+            conta.jLabel9.setVisible(true);
+        }
+        else {
+            conta.jSlider2.setVisible(false);
+            conta.jTextField3.setVisible(false);
+            conta.jLabel9.setVisible(false);
+            conta.jLabel8.setVisible(true);
+        }
         if(Controller.contaSelecionada != null) {
             conta.setVisible(true);
         }
@@ -233,21 +282,37 @@ public class Main extends javax.swing.JFrame {
 
     private void jRadioButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton2ActionPerformed
         Controller.jRadioButtonContas(jTable1);
+        jRadioButton3.setVisible(true);
+        jRadioButton4.setVisible(true);
+        jRadioButton5.setVisible(true);
     }//GEN-LAST:event_jRadioButton2ActionPerformed
 
     private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
         Controller.jRadioButtonClientes(jTable1);
+        jRadioButton3.setVisible(false);
+        jRadioButton4.setVisible(false);
+        jRadioButton5.setVisible(false);
+
     }//GEN-LAST:event_jRadioButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         if (jTable1.getModel() instanceof ClienteTableModel) {
             Controller.atualizaBotaoNovo(jTable1);   
             setTableModel(jTable1, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
-       }
-        if (jTable1.getModel() instanceof ContaTableModel) {
-            Controller.atualizaBotaoNovo(jTable1);
+        }
+        else if (jTable1.getModel() instanceof ContaTableModel) {
+            if(jRadioButton3.isSelected()) {
+                Controller.atualizaBotaoNovo(jTable1);
+            }
+            else if(jRadioButton4.isSelected()) {
+                Controller.atualizaNovoEspecial(jTable1);
+            }
+            else if(jRadioButton5.isSelected()) {
+                Controller.atualizaNovoPoupança(jTable1);
+            }
             Controller.jRadioButtonContas(jTable1);
-       }
+        }
+        
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -312,6 +377,7 @@ public class Main extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
@@ -323,6 +389,9 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
+    public javax.swing.JRadioButton jRadioButton3;
+    public javax.swing.JRadioButton jRadioButton4;
+    public javax.swing.JRadioButton jRadioButton5;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTable jTable1;

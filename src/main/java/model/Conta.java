@@ -20,7 +20,7 @@ public class Conta {
     
     private int id;
     private Calendar dataAbertura;
-    private double saldo;
+    protected double saldo;
     private double limTransacao;
     private String tipo; //originalmente era char mas pro tablemodel da problema
     private int idCliente;
@@ -34,6 +34,20 @@ public class Conta {
         this.idCliente = idCliente;
     }
 
+    public void deposita(double valor) {
+        this.saldo = saldo + valor;
+    }
+    
+    public boolean saca(double valor) {
+        if(this.saldo - valor >= 0) {
+            this.saldo = saldo - valor;
+            return true;
+        } 
+        else {
+            return false;
+        }
+    }
+    
     public int getId() {
         return id;
     }

@@ -67,15 +67,6 @@ public class Controller {
         }
     }
     
-    public static void clearSelected(Object selected) {
-         if(selected instanceof Cliente) {
-            clienteSelecionadoTextField.setText("");
-            contaSelecionadaTextField.setText("");
-        } else if(selected instanceof Conta) {
-            contaSelecionadaTextField.setText("");
-        }
-    }  
-    
     public static boolean jRadioButtonClientes(JTable table) {
         setTableModel(table, new ClienteTableModel(ClienteDAO.getInstance().retrieveAll()));
         return true;
@@ -98,8 +89,17 @@ public class Controller {
         ClienteDAO.getInstance().delete(cliente);
     }
         
-    public static Conta adicionaConta() {
-        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Comum", (double) 8, clienteSelecionado.getId());
+    public static Conta adicionaContaComum() {
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Comum", (double) 100, clienteSelecionado.getId());
+
+    }
+    
+    public static Conta adicionaContaEspecial() {
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Especial", (double) 100, clienteSelecionado.getId());
+    }
+    
+    public static Conta adicionaContaPoupança() {
+        return ContaDAO.getInstance().create(Calendar.getInstance(), (double) 0, "Poupança", (double) 100, clienteSelecionado.getId());
     }
     
     public static Cliente adicionaCliente() {
@@ -112,7 +112,25 @@ public class Controller {
             return true;
         }
         else if(clienteSelecionado!=null) {
-            ((GenericTableModel) table.getModel()).addItem(adicionaConta());
+            ((GenericTableModel) table.getModel()).addItem(adicionaContaComum());
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    public static boolean atualizaNovoEspecial(JTable table) {
+        if(clienteSelecionado!=null) {
+            ((GenericTableModel) table.getModel()).addItem(adicionaContaEspecial());
+            return true;
+        }
+        else
+            return false;
+    }
+    
+    public static boolean atualizaNovoPoupança(JTable table) {
+        if(clienteSelecionado!=null) {
+            ((GenericTableModel) table.getModel()).addItem(adicionaContaPoupança());
             return true;
         }
         else

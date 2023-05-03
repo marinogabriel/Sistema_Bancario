@@ -84,7 +84,9 @@ public abstract class DAO {
                     + "tipo VARCHAR, \n"
                     + "saldo DOUBLE, \n"
                     + "limTransacao DOUBLE, \n"
-                    + "idCliente INTEGER); \n");
+                    + "idCliente INTEGER \n"
+                    + "limCredito INTEGER NULL \n"
+                    + "dia INTEGER NULL); \n");   
             executeUpdate(stmt);
             // Table transfer:
             stmt = DAO.getConnection().prepareStatement("CREATE TABLE IF NOT EXISTS transferencia( \n"

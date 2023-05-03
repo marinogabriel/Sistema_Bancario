@@ -42,6 +42,40 @@ public class ContaDAO extends DAO {
         return this.retrieveById(lastId("conta","id"));
     }
     
+    public Conta create(Calendar dataAbertura, double saldo, String tipo, int dia, double limTransacao, int idCliente) {
+        try {
+            PreparedStatement stmt;
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, dia, limTransacao, idCliente) VALUES (?,?,?,?,?,?)");
+            stmt.setDate(1, new java.sql.Date(dataAbertura.getTimeInMillis()));
+            stmt.setDouble(2, saldo);
+            stmt.setString(3, tipo);
+            stmt.setInt(4, dia);
+            stmt.setDouble(5, limTransacao);
+            stmt.setInt(6, idCliente);
+            executeUpdate(stmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this.retrieveById(lastId("conta","id"));
+    }
+    
+    public Conta create(Calendar dataAbertura, double saldo, String tipo, double limTransacao, int limCredito, int idCliente) {
+        try {
+            PreparedStatement stmt;
+            stmt = DAO.getConnection().prepareStatement("INSERT INTO conta (dataAbertura, saldo, tipo, limTransacao, limCredito, idCliente) VALUES (?,?,?,?,?,?)");
+            stmt.setDate(1, new java.sql.Date(dataAbertura.getTimeInMillis()));
+            stmt.setDouble(2, saldo);
+            stmt.setString(3, tipo);
+            stmt.setDouble(4, limTransacao);
+            stmt.setInt(5, limCredito);
+            stmt.setInt(6, idCliente);
+            executeUpdate(stmt);
+        } catch (SQLException ex) {
+            Logger.getLogger(ContaDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return this.retrieveById(lastId("conta","id"));
+    }
+    
     /* Uma pequena gambiarra, depois explico...
     public boolean isLastEmpty(){
         Conta lastConta = this.retrieveById(lastId("conta","id"));
@@ -123,7 +157,7 @@ public class ContaDAO extends DAO {
         try {
             PreparedStatement stmt;
             stmt = DAO.getConnection().prepareStatement("UPDATE conta SET saldo=? WHERE id=?");
-            stmt.setDouble(1, conta.getSaldo() + deposito);
+            stmt.setDouble(1, (conta.getSaldo() + deposito));
             stmt.setInt(2, conta.getId());
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
