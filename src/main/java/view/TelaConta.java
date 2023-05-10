@@ -104,6 +104,11 @@ public class TelaConta extends javax.swing.JFrame {
                 jSlider1StateChanged(evt);
             }
         });
+        jSlider1.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jSlider1MouseDragged(evt);
+            }
+        });
 
         jButton3.setText("Transferir");
         jButton3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -142,6 +147,11 @@ public class TelaConta extends javax.swing.JFrame {
         jSlider2.addChangeListener(new javax.swing.event.ChangeListener() {
             public void stateChanged(javax.swing.event.ChangeEvent evt) {
                 jSlider2StateChanged(evt);
+            }
+        });
+        jSlider2.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseDragged(java.awt.event.MouseEvent evt) {
+                jSlider2MouseDragged(evt);
             }
         });
 
@@ -296,20 +306,28 @@ public class TelaConta extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void jSlider2StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider2StateChanged
-        jTextField3.setText(Integer.toString(jSlider2.getValue()));
-        contaSelecionada.setLimCredito(jSlider2.getValue());
-        ContaDAO.getInstance().update(contaSelecionada);
+
     }//GEN-LAST:event_jSlider2StateChanged
 
     private void jSlider1StateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_jSlider1StateChanged
-        jTextField5.setText(Integer.toString(jSlider1.getValue()));
-        contaSelecionada.setLimTransacao(jSlider1.getValue());
-        ContaDAO.getInstance().update(contaSelecionada);
+       
     }//GEN-LAST:event_jSlider1StateChanged
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
 
     }//GEN-LAST:event_formWindowClosing
+
+    private void jSlider2MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider2MouseDragged
+        jTextField3.setText(Integer.toString(jSlider2.getValue()));
+        contaSelecionada.setLimCredito(jSlider2.getValue());
+        ContaDAO.getInstance().update(contaSelecionada);
+    }//GEN-LAST:event_jSlider2MouseDragged
+
+    private void jSlider1MouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jSlider1MouseDragged
+        jTextField5.setText(Integer.toString(jSlider1.getValue()));
+        contaSelecionada.setLimTransacao(jSlider1.getValue());
+        ContaDAO.getInstance().update(contaSelecionada);
+    }//GEN-LAST:event_jSlider1MouseDragged
 
     /**
      * @param args the command line arguments

@@ -79,9 +79,9 @@ public class LimCredito extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        ContaDAO.getInstance().retrieveLast().setLimCredito(Integer.parseInt(jTextField1.getText())); //TODO atualizar limite de credito da conta recem criada
+        contaSelecionada.setLimCredito(Integer.parseInt(jTextField1.getText()));
         ContaDAO.getInstance().update(contaSelecionada);
-        Controller.jRadioButtonContas(Controller.getJTable());
+        //Controller.jRadioButtonContas(Controller.getJTable());
         dispose();
     }//GEN-LAST:event_jButton1ActionPerformed
 

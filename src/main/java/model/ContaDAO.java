@@ -45,13 +45,12 @@ public class ContaDAO extends DAO {
         return this.retrieveById(lastId("conta","id"));
     }
     
-
     private Conta buildObject(ResultSet rs) {
         Conta conta = null;
         try {
             Calendar dt = Calendar.getInstance();
             dt.setTime(rs.getDate("dataAbertura"));
-            conta = new Conta(rs.getInt("id"), dt, rs.getDouble("saldo"), rs.getDouble("limTransacao"), rs.getString("tipo"), rs.getInt("limCredito"), rs.getInt("dia"), rs.getInt("idCliente"));
+            conta = new Conta(rs.getInt("id"), dt, rs.getDouble("saldo"), rs.getDouble("limTransacao"), rs.getString("tipo"), rs.getInt("dia"), rs.getInt("limCredito"), rs.getInt("idCliente"));
         } catch (SQLException e) {
             System.err.println("Exception: " + e.getMessage());
         }
@@ -78,8 +77,9 @@ public class ContaDAO extends DAO {
     }
     
     // RetrieveLast
-    public List retrieveLast(){
-        return this.retrieve("SELECT * FROM conta WHERE id = " + lastId("conta","id"));
+    public Conta retrieveLast(){
+        List<Conta> contas = this.retrieve("SELECT * FROM conta WHERE id = " + lastId("conta","id"));
+        return (contas.isEmpty()?null:contas.get(0));
     }
 
     // RetrieveById
