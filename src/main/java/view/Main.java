@@ -264,7 +264,7 @@ public class Main extends javax.swing.JFrame {
         }
         if(Controller.contaSelecionada != null) {
             conta.setVisible(true);
-            conta.jTextField1.setText(Double.toString(contaSelecionada.getSaldo()));
+            conta.jTextField1.setText("R$ " + Double.toString(contaSelecionada.getSaldo()));
             conta.jTextField5.setText(Double.toString(contaSelecionada.getLimTransacao()));
             conta.jSlider1.setValue((int)contaSelecionada.getLimTransacao());
         }

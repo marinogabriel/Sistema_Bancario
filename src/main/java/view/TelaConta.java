@@ -275,7 +275,7 @@ public class TelaConta extends javax.swing.JFrame {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         contaSelecionada.deposita(Double.parseDouble(Controller.saldoInputTextField.getText()));
-        saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        saldoTextField.setText("R$ " + Double.toString((contaSelecionada.getSaldo())));
         ContaDAO.getInstance().update(contaSelecionada);
         Controller.jRadioButtonContas(Controller.getJTable());
     }//GEN-LAST:event_jButton1ActionPerformed
@@ -286,7 +286,7 @@ public class TelaConta extends javax.swing.JFrame {
         } else {
             contaSelecionada.saca(Double.parseDouble(Controller.saldoInputTextField.getText()));
         }
-        saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        saldoTextField.setText("R$ " + Double.toString((contaSelecionada.getSaldo())));
         ContaDAO.getInstance().update(contaSelecionada);
         Controller.jRadioButtonContas(Controller.getJTable());
     }//GEN-LAST:event_jButton2ActionPerformed
@@ -297,7 +297,7 @@ public class TelaConta extends javax.swing.JFrame {
         } else {
             contaSelecionada.saca(Double.parseDouble(Controller.valorInputTextField.getText()));
         }
-        saldoTextField.setText(Double.toString((contaSelecionada.getSaldo())));
+        saldoTextField.setText("R$ " + Double.toString((contaSelecionada.getSaldo())));
         Conta contaAlvo = ContaDAO.getInstance().retrieveById(Integer.parseInt(Controller.contaInputTextField.getText()));
         contaAlvo.deposita(Double.parseDouble(Controller.valorInputTextField.getText()));
         ContaDAO.getInstance().update(contaSelecionada);
