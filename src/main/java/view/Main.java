@@ -252,6 +252,7 @@ public class Main extends javax.swing.JFrame {
             conta.jLabel9.setVisible(true);
             conta.jLabel10.setVisible(false);
             conta.jTextField3.setText(Double.toString(contaSelecionada.getLimCredito()));
+            conta.jSlider2.setValue(contaSelecionada.getLimCredito());
         }
         else {
             conta.jSlider2.setVisible(false);
@@ -265,6 +266,7 @@ public class Main extends javax.swing.JFrame {
             conta.setVisible(true);
             conta.jTextField1.setText(Double.toString(contaSelecionada.getSaldo()));
             conta.jTextField5.setText(Double.toString(contaSelecionada.getLimTransacao()));
+            conta.jSlider1.setValue((int)contaSelecionada.getLimTransacao());
         }
     }//GEN-LAST:event_jButton1ActionPerformed
 

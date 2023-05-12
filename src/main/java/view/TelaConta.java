@@ -383,7 +383,7 @@ public class TelaConta extends javax.swing.JFrame {
     public javax.swing.JLabel jLabel9;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
-    private javax.swing.JSlider jSlider1;
+    public javax.swing.JSlider jSlider1;
     public javax.swing.JSlider jSlider2;
     public javax.swing.JTextField jTextField1;
     public javax.swing.JTextField jTextField2;
